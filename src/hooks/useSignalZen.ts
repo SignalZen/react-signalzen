@@ -15,97 +15,107 @@ type SignalZenAPI = {
 
 declare global {
   interface Window {
-    SignalZen:any;
+    SignalZen: any;
   }
 }
 
 const whenAvailable = (callback: (klass: any) => void) => {
-  const t = setInterval(
-    () => {
-      if (window.SignalZen) {
-        clearInterval(t)
-        callback(window.SignalZen)
-      }
-    },
-    10
-  );
-}
+  const t = setInterval(() => {
+    if (window.SignalZen) {
+      clearInterval(t);
+      callback(window.SignalZen);
+    }
+  }, 10);
+};
 
-export const useSignalZen = (appId: string, options: Record<string, any> = {}): SignalZenAPI => {
-  const [instance, setInstance] = useState<any>(null)
+export const useSignalZen = (
+  appId: string,
+  options: Record<string, any> = {},
+): SignalZenAPI => {
+  const [instance, setInstance] = useState<any>(null);
   const load = async () => {
     if (instance) return;
 
-    const element = document.createElement("script");
-    element.src = options.src || "https://cdn.signalzen.com/signalzen.js"
-    element.setAttribute("async","true")
+    const element = document.createElement('script');
+    element.src = options.src || 'https://cdn.signalzen.com/signalzen.js';
+    element.setAttribute('async', 'true');
     document.documentElement.firstChild?.appendChild(element);
     whenAvailable((SignalZen) => {
-      const instance = new SignalZen({ ...options, appId })
-      setInstance(instance)
-      instance.load()
-    })
-  }
+      const instance = new SignalZen({ ...options, appId });
+      setInstance(instance);
+      instance.load();
+    });
+  };
 
   const pushUserData = (data: Record<string, any>) => {
     whenAvailable((SignalZen) => {
-      SignalZen.pushUserData(data)
-    })
-  }
+      SignalZen.pushUserData(data);
+    });
+  };
 
   const setChatIcon = (data: Record<string, any>) => {
     whenAvailable((SignalZen) => {
-      SignalZen.setChatIcon(data)
-    })
-  }
+      SignalZen.setChatIcon(data);
+    });
+  };
 
   const setLayout = (data: Record<string, any>) => {
     whenAvailable((SignalZen) => {
-      SignalZen.setLayout(data)
-    })
-  }
+      SignalZen.setLayout(data);
+    });
+  };
 
   const setColors = (data: Record<string, any>) => {
     whenAvailable((SignalZen) => {
-      SignalZen.setColors(data)
-    })
-  }
+      SignalZen.setColors(data);
+    });
+  };
 
   const setHideOnMobile = (value: boolean) => {
     whenAvailable((SignalZen) => {
-      SignalZen.setHideOnMobile(value)
-    })
-  }
+      SignalZen.setHideOnMobile(value);
+    });
+  };
 
   const show = () => {
     whenAvailable((SignalZen) => {
-      SignalZen.show()
-    })
-  }
+      SignalZen.show();
+    });
+  };
 
   const hide = () => {
     whenAvailable((SignalZen) => {
-      SignalZen.hide()
-    })
-  }
+      SignalZen.hide();
+    });
+  };
 
   const expand = () => {
     whenAvailable((SignalZen) => {
-      SignalZen.expand()
-    })
-  }
+      SignalZen.expand();
+    });
+  };
 
   const suspend = () => {
     whenAvailable((SignalZen) => {
-      SignalZen.suspend()
-    })
-  }
+      SignalZen.suspend();
+    });
+  };
 
   useEffect(() => {
-    load()
-  }, [])
-  
-  return { pushUserData, setChatIcon, setLayout, setColors, setHideOnMobile, show, hide, expand, suspend };
+    load();
+  }, []);
+
+  return {
+    pushUserData,
+    setChatIcon,
+    setLayout,
+    setColors,
+    setHideOnMobile,
+    show,
+    hide,
+    expand,
+    suspend,
+  };
 };
 
 useSignalZen.PropTypes = {
@@ -113,5 +123,4 @@ useSignalZen.PropTypes = {
   options: PropTypes.object,
 };
 
-useSignalZen.defaultProps = {
-};
+useSignalZen.defaultProps = {};
