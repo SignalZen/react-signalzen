@@ -1,9 +1,12 @@
 {
-  "name": "react-signalzen",
+  "name": "@signalzen/react-signalzen",
   "version": "0.0.1",
-  "description": "SignalZen React hooks",
+  "description": "SignalZen React hook and provider",
   "author": "kurbaitis",
-  "repository": "signalzen/react-signalzen",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/signalzen/react-signalzen.git"
+  },
   "main": "dist/index.js",
   "engines": {
     "node": ">=18",
@@ -64,5 +67,11 @@
   ],
   "dependencies": {
     "prop-types": "^15.8.1"
-  }
+  },
+  "license": "ISC",
+  "types": "./dist/index.d.ts",
+  "bugs": {
+    "url": "https://github.com/signalzen/react-signalzen/issues"
+  },
+  "homepage": "https://github.com/signalzen/react-signalzen#readme"
 }
