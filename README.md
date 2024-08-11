@@ -36,6 +36,57 @@ useSignalZen("<PUBLIC_TOKEN>", { invisible: true });
 ```
 
 ## Use case 2, the provider
+The provider should be places at the top level of your React components tree. For instance:
 
+```javascript
+import { SignalZenProvider } from 'react-signalzen'
+
+export default () => {
+  return <SignalZenProvider token="<PUBLIC_TOKEN>">
+    <App />
+  </SignalZenProvider>
+}
+```
+
+You can also use options, for instance, to start widget in invisible mode:
+```javascript
+<SignalZenProvider token="<PUBLIC_TOKEN>" options={{ invisible: true }}></SignalZenProvider>
+```
+
+Then inside components of the `<App />` you can access context functions:
+```javascript
+import React, { useContext } from 'react'
+import { SignalZenContext } from "react-signalzen"
+import AuthContext from "../contexts/auth"
+
+export default () => {
+  const { user } = useContext(AuthContext);
+  const { pushUserData } = useContext(SignalZenContext);
+  const syncUserData = (e) => {
+    e.preventDefault()
+    pushUserData({
+      email: user.email,
+      name: user.name,
+      'Is admin?': user.isAdmin
+    })
+  }
+  return <a href="#" onClick={syncUserData}>Sync</a>
+}
+```
+
+Available functions:
+```
+pushUserData
+setChatIcon
+setLayout
+setColors
+setHideOnMobile
+show
+hide
+expand
+suspend
+```
+
+More information about functions you can find at https://docs.signalzen.com
 ## Copyright
 MB "SignalZen"
